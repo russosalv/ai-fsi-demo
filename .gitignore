@@ -18,3 +18,7 @@ be/Banking.Logic/obj/
 be/Banking.Models/bin/
 
 be/Banking.Models/obj/
+
+# Log dei script E2E
+backend.log
+frontend.log
