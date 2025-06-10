@@ -8,7 +8,7 @@ Facciamo creare un nuovo progetto c# chiamato Bamking.Infrastructure che contien
 Obbiettivo: Dimostrare la fattibilità di poter generare codice a partire da un documento tecnico
 
 ```txt
-dato il documento tecnico della banca alfa crea in /be un ulteriroe progetto chiamato Banking.Infrastructure che implementi la comunicazione verso l'api descritta in documentazione.
+dato il documento tecnico della banca alfa crea in /be un ulteriore progetto chiamato Banking.Infrastructure che implementi la comunicazione verso l'api descritta in documentazione.
 Prima di effettuare le modifiche di codice assicurati di aver compreso il documento,
 Rileggi tutto il documento, crea una strategia di implementazione e codiviti la strategia.
 Il to compito e mapapre tutti i dati richiesti e le possibili eccezioni
