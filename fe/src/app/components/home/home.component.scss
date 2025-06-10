@@ -286,66 +286,72 @@
   }
 }
 
-// Summary Section
-.summary-section {
-  .accounts-grid {
+// Services Section
+.services-section {
+  .services-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 20px;
 
-    .account-summary-card {
+    .service-card {
       background: white;
+      border: 2px solid #e2e8f0;
       border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      transition: transform 0.2s ease;
+      padding: 24px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      text-align: left;
 
       &:hover {
-        transform: translateY(-2px);
+        border-color: #667eea;
+        transform: translateY(-3px);
+        box-shadow: 0 12px 28px rgba(102, 126, 234, 0.2);
       }
 
-      .card-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 16px;
+      &:active {
+        transform: translateY(-1px);
+      }
 
-        h4 {
-          margin: 0;
+      .service-icon {
+        font-size: 2.5rem;
+        line-height: 1;
+        min-width: 60px;
+        text-align: center;
+      }
+
+      .service-content {
+        flex: 1;
+
+        h3 {
+          margin: 0 0 8px 0;
           color: #2d3748;
-          font-size: 1.1rem;
+          font-size: 1.2rem;
           font-weight: 600;
         }
 
-        .type-badge {
-          background: #f1f5f9;
-          color: #4a5568;
-          padding: 4px 8px;
-          border-radius: 6px;
-          font-size: 0.75rem;
-          font-weight: 500;
+        p {
+          margin: 0;
+          color: #718096;
+          font-size: 0.9rem;
+          line-height: 1.4;
         }
       }
 
-      .card-content {
-        .balance {
-          font-size: 1.5rem;
-          font-weight: 700;
-          color: #667eea;
-          margin-bottom: 8px;
-        }
+      .service-arrow {
+        font-size: 1.5rem;
+        color: #667eea;
+        opacity: 0.7;
+        transition: all 0.2s ease;
+        min-width: 30px;
+        text-align: center;
+      }
 
-        .iban-short {
-          font-family: 'Courier New', monospace;
-          color: #718096;
-          font-size: 0.85rem;
-          margin-bottom: 4px;
-        }
-
-        .last-update {
-          color: #a0aec0;
-          font-size: 0.8rem;
-        }
+      &:hover .service-arrow {
+        opacity: 1;
+        transform: translateX(4px);
       }
     }
   }
@@ -386,7 +392,7 @@
     }
   }
 
-  .accounts-grid {
+  .services-grid {
     grid-template-columns: 1fr;
   }
 } 

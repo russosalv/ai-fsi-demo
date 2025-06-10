@@ -92,21 +92,36 @@
       </div>
     </div>
 
-    <!-- Account Summary -->
-    <div class="summary-section" *ngIf="bankAccounts.length > 0">
-      <h2>Riepilogo conti</h2>
-      <div class="accounts-grid">
-        <div *ngFor="let account of bankAccounts" class="account-summary-card">
-          <div class="card-header">
-            <h4>{{ account.accountName }}</h4>
-            <span class="type-badge">{{ getAccountTypeLabel(account.accountType) }}</span>
+    <!-- Services Menu -->
+    <div class="services-section">
+      <h2>Servizi bancari</h2>
+      <div class="services-grid">
+        <button class="service-card" (click)="navigateToService('p2p')">
+          <div class="service-icon">💸</div>
+          <div class="service-content">
+            <h3>Pagamento P2P</h3>
+            <p>Invia denaro facilmente ai tuoi contatti</p>
           </div>
-          <div class="card-content">
-            <div class="balance">{{ formatCurrency(account.balance) }}</div>
-            <div class="iban-short">{{ account.iban.substring(0, 8) }}...{{ account.iban.substring(account.iban.length - 4) }}</div>
-            <div class="last-update">Agg. {{ formatDate(account.lastUpdated) }}</div>
+          <div class="service-arrow">→</div>
+        </button>
+
+        <button class="service-card" (click)="navigateToService('cards')">
+          <div class="service-icon">💳</div>
+          <div class="service-content">
+            <h3>Carte</h3>
+            <p>Gestisci le tue carte di pagamento</p>
           </div>
-        </div>
+          <div class="service-arrow">→</div>
+        </button>
+
+        <button class="service-card" (click)="navigateToService('transfers')">
+          <div class="service-icon">🏦</div>
+          <div class="service-content">
+            <h3>Bonifici</h3>
+            <p>Effettua trasferimenti bancari</p>
+          </div>
+          <div class="service-arrow">→</div>
+        </button>
       </div>
     </div>
   </main>
