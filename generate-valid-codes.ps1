@@ -142,8 +142,9 @@ function Calculate-TaxCodeCheckDigit($code) {
 function Generate-IBAN {
     param(
         [string]$CountryCode = "IT",
-        [string]$BankCode = "05428",
-        [string]$BranchCode = "11101"
+        [string]$CinCode = "", # Will be calculated
+        [string]$AbiCode = "05428",
+        [string]$CabCode = "11101"
     )
     
     # Generate random account number (12 digits for Italian IBAN)
@@ -152,11 +153,44 @@ function Generate-IBAN {
         $accountNumber += Get-Random -Minimum 0 -Maximum 10
     }
     
-    # Calculate check digits
-    $bban = $BankCode + $BranchCode + $accountNumber
+    # Calculate CIN (Control Internal Number) for Italian IBAN
+    $cinCode = Calculate-ItalianCIN ($AbiCode + $CabCode + $accountNumber)
+    
+    # Build BBAN (Basic Bank Account Number): CIN + ABI + CAB + Account
+    $bban = $cinCode + $AbiCode + $CabCode + $accountNumber
+    
+    # Calculate IBAN check digits
     $checkDigits = Calculate-IBANCheckDigits $CountryCode $bban
     
     return $CountryCode + $checkDigits + $bban
+}
+
+function Calculate-ItalianCIN($accountCode) {
+    # Italian CIN calculation algorithm
+    $oddWeights = @(1, 0, 5, 7, 9, 13, 15, 17, 19, 21, 2, 4, 18, 20, 11, 3, 6, 8, 12, 14, 16, 10, 22, 25, 24, 23)
+    $evenWeights = @(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25)
+    $cinChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    
+    $sum = 0
+    for ($i = 0; $i -lt $accountCode.Length; $i++) {
+        $char = $accountCode[$i]
+        $value = 0
+        
+        if ([char]::IsDigit($char)) {
+            $value = [int]$char - [int]'0'
+        } else {
+            $value = [int][char]$char - [int][char]'A' + 10
+        }
+        
+        if ($i % 2 -eq 0) {  # Odd position (1-based)
+            $sum += $oddWeights[$value]
+        } else {  # Even position (1-based)
+            $sum += $evenWeights[$value]
+        }
+    }
+    
+    $remainder = $sum % 26
+    return $cinChars[$remainder]
 }
 
 function Calculate-IBANCheckDigits($countryCode, $bban) {

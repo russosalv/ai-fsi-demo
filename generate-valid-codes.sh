@@ -172,8 +172,8 @@ calculate_tax_code_check_digit() {
 # Function to generate IBAN
 generate_iban() {
     local country_code="${1:-IT}"
-    local bank_code="${2:-05428}"
-    local branch_code="${3:-11101}"
+    local abi_code="${2:-05428}"
+    local cab_code="${3:-11101}"
     
     # Generate random account number (12 digits for Italian IBAN)
     local account_number=""
@@ -181,11 +181,47 @@ generate_iban() {
         account_number="$account_number$((RANDOM % 10))"
     done
     
-    # Calculate check digits
-    local bban="$bank_code$branch_code$account_number"
+    # Calculate CIN (Control Internal Number) for Italian IBAN
+    local cin_code=$(calculate_italian_cin "$abi_code$cab_code$account_number")
+    
+    # Build BBAN (Basic Bank Account Number): CIN + ABI + CAB + Account
+    local bban="$cin_code$abi_code$cab_code$account_number"
+    
+    # Calculate IBAN check digits
     local check_digits=$(calculate_iban_check_digits "$country_code" "$bban")
     
     echo "$country_code$check_digits$bban"
+}
+
+# Function to calculate Italian CIN
+calculate_italian_cin() {
+    local account_code="$1"
+    local sum=0
+    
+    # Lookup tables for odd and even positions (for CIN calculation)
+    declare -a odd_weights=(1 0 5 7 9 13 15 17 19 21 2 4 18 20 11 3 6 8 12 14 16 10 22 25 24 23)
+    declare -a even_weights=(0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25)
+    local cin_chars="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    
+    for ((i=0; i<${#account_code}; i++)); do
+        local char="${account_code:$i:1}"
+        local value=0
+        
+        if [[ "$char" =~ [0-9] ]]; then
+            value=$((char))
+        elif [[ "$char" =~ [A-Z] ]]; then
+            value=$(($(printf "%d" "'$char") - $(printf "%d" "'A") + 10))
+        fi
+        
+        if [ $((i % 2)) -eq 0 ]; then  # Odd position (1-based)
+            sum=$((sum + ${odd_weights[$value]}))
+        else  # Even position (1-based)
+            sum=$((sum + ${even_weights[$value]}))
+        fi
+    done
+    
+    local remainder=$((sum % 26))
+    echo "${cin_chars:$remainder:1}"
 }
 
 # Function to calculate IBAN check digits

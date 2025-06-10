@@ -272,39 +272,82 @@ import { Customer } from '../../models/customer.model';
             <h3>Aggiungi Nuovo Contatto</h3>
             <button class="close-btn" (click)="closeAddContact()">✕</button>
           </div>
-          
-          <form [formGroup]="contactForm" (ngSubmit)="addNewContact()">
+            <form [formGroup]="contactForm" (ngSubmit)="addNewContact()">
             <div class="form-field">
               <label for="firstName">Nome *</label>
-              <input type="text" id="firstName" formControlName="firstName" required>
+              <input type="text" id="firstName" formControlName="firstName" 
+                     [class.error]="contactForm.get('firstName')?.invalid && contactForm.get('firstName')?.touched"
+                     maxlength="50" required>
+              <div class="field-error" *ngIf="contactForm.get('firstName')?.touched && contactForm.get('firstName')?.errors">
+                <span *ngIf="contactForm.get('firstName')?.errors?.['required']">Il nome è obbligatorio</span>
+                <span *ngIf="contactForm.get('firstName')?.errors?.['maxlength']">Il nome non può superare i 50 caratteri</span>
+              </div>
             </div>
             
             <div class="form-field">
               <label for="lastName">Cognome *</label>
-              <input type="text" id="lastName" formControlName="lastName" required>
+              <input type="text" id="lastName" formControlName="lastName" 
+                     [class.error]="contactForm.get('lastName')?.invalid && contactForm.get('lastName')?.touched"
+                     maxlength="50" required>
+              <div class="field-error" *ngIf="contactForm.get('lastName')?.touched && contactForm.get('lastName')?.errors">
+                <span *ngIf="contactForm.get('lastName')?.errors?.['required']">Il cognome è obbligatorio</span>
+                <span *ngIf="contactForm.get('lastName')?.errors?.['maxlength']">Il cognome non può superare i 50 caratteri</span>
+              </div>
             </div>
-            
-            <div class="form-field">
+              <div class="form-field">
               <label for="taxCodeNew">Codice Fiscale *</label>
               <input type="text" id="taxCodeNew" formControlName="taxCode" 
                      placeholder="RSSMRA85M01H501U" 
-                     style="text-transform: uppercase" required>
+                     [class.error]="contactForm.get('taxCode')?.invalid && contactForm.get('taxCode')?.touched"
+                     style="text-transform: uppercase" 
+                     maxlength="16" required>
+              <div class="field-error" *ngIf="contactForm.get('taxCode')?.touched && contactForm.get('taxCode')?.errors">
+                <span *ngIf="contactForm.get('taxCode')?.errors?.['required']">Il codice fiscale è obbligatorio</span>
+                <span *ngIf="contactForm.get('taxCode')?.errors?.['pattern']">
+                  Il codice fiscale deve essere nel formato italiano: 6 lettere + 2 numeri + 1 lettera + 2 numeri + 1 lettera + 3 numeri + 1 lettera (es: RSSMRA85M01H501U)
+                </span>
+              </div>
+              <div class="field-success" *ngIf="contactForm.get('taxCode')?.valid && contactForm.get('taxCode')?.touched">
+                Codice fiscale valido
+              </div>
+              <div class="field-help">
+                Formato: RSSMRA85M01H501U (16 caratteri - formato italiano)
+              </div>
             </div>
             
             <div class="form-field">
               <label for="email">Email</label>
-              <input type="email" id="email" formControlName="email">
+              <input type="email" id="email" formControlName="email"
+                     [class.error]="contactForm.get('email')?.invalid && contactForm.get('email')?.touched"
+                     placeholder="nome@esempio.com">
+              <div class="field-error" *ngIf="contactForm.get('email')?.touched && contactForm.get('email')?.errors">
+                <span *ngIf="contactForm.get('email')?.errors?.['email']">Inserisci un indirizzo email valido</span>
+              </div>
             </div>
             
             <div class="form-field">
               <label for="phone">Telefono</label>
-              <input type="tel" id="phone" formControlName="phone">
+              <input type="tel" id="phone" formControlName="phone"
+                     placeholder="+39 123 456 7890">
             </div>
-            
-            <div class="form-field">
+              <div class="form-field">
               <label for="iban">IBAN</label>
               <input type="text" id="iban" formControlName="iban" 
-                     placeholder="IT60X0542811101000000123456">
+                     [class.error]="contactForm.get('iban')?.invalid && contactForm.get('iban')?.touched"
+                     placeholder="IT60X0542811101000000123456"
+                     style="text-transform: uppercase"
+                     maxlength="27">
+              <div class="field-error" *ngIf="contactForm.get('iban')?.touched && contactForm.get('iban')?.errors">
+                <span *ngIf="contactForm.get('iban')?.errors?.['pattern']">
+                  L'IBAN deve essere nel formato italiano: IT + 2 numeri + 1 lettera + 22 numeri (es: IT60X0542811101000000123456)
+                </span>
+              </div>
+              <div class="field-success" *ngIf="contactForm.get('iban')?.valid && contactForm.get('iban')?.touched && contactForm.get('iban')?.value">
+                IBAN valido
+              </div>
+              <div class="field-help">
+                Formato: IT22X1234567890123456789012 (27 caratteri - solo IBAN italiani)
+              </div>
             </div>
             
             <div class="modal-actions">
@@ -361,6 +404,11 @@ export class P2PTransferComponent implements OnInit, OnDestroy {
     this.contactForm = this.createContactForm();
   }
 
+  // Getter per accesso facile ai campi del form
+  get contactFormControls() {
+    return this.contactForm.controls;
+  }
+
   ngOnInit(): void {
     this.currentUser = this.authService.getCurrentUser();
     this.loadData();
@@ -378,9 +426,8 @@ export class P2PTransferComponent implements OnInit, OnDestroy {
       referenceId: ['', [Validators.maxLength(50), Validators.pattern(/^[a-zA-Z0-9_-]*$/)]]
     });
   }
-
   private createContactForm(): FormGroup {
-    return this.fb.group({
+    const form = this.fb.group({
       firstName: ['', [Validators.required, Validators.maxLength(50)]],
       lastName: ['', [Validators.required, Validators.maxLength(50)]],
       taxCode: ['', [Validators.required, Validators.pattern(/^[A-Z]{6}[0-9]{2}[A-Z][0-9]{2}[A-Z][0-9]{3}[A-Z]$/)]],
@@ -388,6 +435,25 @@ export class P2PTransferComponent implements OnInit, OnDestroy {
       phone: [''],
       iban: ['', [Validators.pattern(/^IT[0-9]{2}[A-Z][0-9]{22}$/)]]
     });
+
+    // Aggiungi listeners per validazione real-time
+    form.get('taxCode')?.valueChanges.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(value => {
+      if (value) {
+        form.get('taxCode')?.setValue(value.toUpperCase(), { emitEvent: false });
+      }
+    });
+
+    form.get('iban')?.valueChanges.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(value => {
+      if (value) {
+        form.get('iban')?.setValue(value.toUpperCase(), { emitEvent: false });
+      }
+    });
+
+    return form;
   }
 
   private loadData(): void {
@@ -574,12 +640,14 @@ export class P2PTransferComponent implements OnInit, OnDestroy {
     } finally {
       this.processing = false;
     }
-  }
-  addNewContact(): void {
+  }  addNewContact(): void {
+    // Marca tutti i campi come touched per mostrare gli errori
+    this.contactForm.markAllAsTouched();
+    
     if (this.contactForm.invalid) {
       this.toastService.showWarning(
         'Modulo Non Valido',
-        'Compila tutti i campi obbligatori correttamente.'
+        'Verifica i campi evidenziati in rosso e correggi gli errori.'
       );
       return;
     }
