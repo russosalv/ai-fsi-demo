@@ -2,6 +2,10 @@ using Microsoft.EntityFrameworkCore;
 using Banking.Models.Data;
 using Banking.Logic.Interfaces;
 using Banking.Logic.Services;
+using Banking.Infrastructure.Interfaces;
+using Banking.Infrastructure.Services;
+using Banking.Infrastructure.Configuration;
+using Banking.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +19,9 @@ builder.Services.AddDbContext<BankingDbContext>(options =>
 // Add business logic services
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IBankAccountService, BankAccountService>();
+
+// Add Banca Alfa Infrastructure services
+builder.Services.AddBancaAlfaInfrastructure(builder.Configuration);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

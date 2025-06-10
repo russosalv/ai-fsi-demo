@@ -1,0 +1,79 @@
+### Test API P2P Banking
+
+# Health Check
+GET https://localhost:7086/api/P2P/health
+
+###
+
+# Validate P2P Transfer Request
+POST https://localhost:7086/api/P2P/validate
+Content-Type: application/json
+
+{
+  "sender_tax_id": "RSSMRA85M01H501U",
+  "recipient_tax_id": "BNCGPP90A01F205X",
+  "amount": 100.50,
+  "currency": "EUR",
+  "description": "Pagamento per cena",
+  "reference_id": "REF-2025-001"
+}
+
+###
+
+# P2P Transfer
+POST https://localhost:7086/api/P2P/transfer
+Content-Type: application/json
+
+{
+  "sender_tax_id": "RSSMRA85M01H501U",
+  "recipient_tax_id": "BNCGPP90A01F205X",
+  "amount": 100.50,
+  "currency": "EUR",
+  "description": "Pagamento per cena",
+  "reference_id": "REF-2025-001"
+}
+
+###
+
+# Test Validation Errors - Invalid Tax ID
+POST https://localhost:7086/api/P2P/validate
+Content-Type: application/json
+
+{
+  "sender_tax_id": "INVALID",
+  "recipient_tax_id": "BNCGPP90A01F205X",
+  "amount": 100.50,
+  "currency": "EUR",
+  "description": "Test errore validazione",
+  "reference_id": "REF-2025-002"
+}
+
+###
+
+# Test Validation Errors - Negative Amount
+POST https://localhost:7086/api/P2P/validate
+Content-Type: application/json
+
+{
+  "sender_tax_id": "RSSMRA85M01H501U",
+  "recipient_tax_id": "BNCGPP90A01F205X",
+  "amount": -50.00,
+  "currency": "EUR",
+  "description": "Test importo negativo",
+  "reference_id": "REF-2025-003"
+}
+
+###
+
+# Test Same Tax ID
+POST https://localhost:7086/api/P2P/validate
+Content-Type: application/json
+
+{
+  "sender_tax_id": "RSSMRA85M01H501U",
+  "recipient_tax_id": "RSSMRA85M01H501U",
+  "amount": 100.00,
+  "currency": "EUR",
+  "description": "Test stesso codice fiscale",
+  "reference_id": "REF-2025-004"
+}

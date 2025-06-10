@@ -17,16 +17,13 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddBancaAlfaInfrastructure(
         this IServiceCollection services, 
         IConfiguration configuration)
-    {
-        // Configurazione
+    {        // Configurazione
         services.Configure<BancaAlfaApiConfiguration>(
-            configuration.GetSection("BancaAlfa"));
-
-        // HTTP Client per Banca Alfa con nome specifico
+            configuration.GetSection("BancaAlfaApi"));        // HTTP Client per Banca Alfa con nome specifico
         services.AddHttpClient<IBancaAlfaP2PService, BancaAlfaP2PService>("BancaAlfa")
             .ConfigureHttpClient((serviceProvider, client) =>
             {
-                var config = configuration.GetSection("BancaAlfa").Get<BancaAlfaApiConfiguration>();
+                var config = configuration.GetSection("BancaAlfaApi").Get<BancaAlfaApiConfiguration>();
                 if (config != null)
                 {
                     client.BaseAddress = new Uri(config.BaseUrl);
