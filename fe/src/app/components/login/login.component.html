@@ -1,0 +1,73 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <h1>🏦 Banking Portal</h1>
+      <p>Accedi al tuo conto</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <!-- Tax Code Field -->
+      <div class="form-group">
+        <label for="taxCode">Codice Fiscale</label>
+        <input
+          type="text"
+          id="taxCode"
+          formControlName="taxCode"
+          placeholder="Inserisci il tuo codice fiscale"
+          class="form-control"
+          [class.error]="taxCode?.invalid && taxCode?.touched"
+          maxlength="16"
+          style="text-transform: uppercase;"
+        />
+        <div class="error-message" *ngIf="taxCode?.invalid && taxCode?.touched">
+          <span *ngIf="taxCode?.errors?.['required']">Il codice fiscale è obbligatorio</span>
+          <span *ngIf="taxCode?.errors?.['minlength'] || taxCode?.errors?.['maxlength']">
+            Il codice fiscale deve essere di 16 caratteri
+          </span>
+        </div>
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          placeholder="Inserisci la tua password"
+          class="form-control"
+          [class.error]="password?.invalid && password?.touched"
+        />
+        <div class="error-message" *ngIf="password?.invalid && password?.touched">
+          <span *ngIf="password?.errors?.['required']">La password è obbligatoria</span>
+        </div>
+      </div>
+
+      <!-- Error Message -->
+      <div class="error-message global-error" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="btn-primary"
+        [disabled]="isLoading"
+      >
+        <span *ngIf="isLoading" class="loading-spinner">⏳</span>
+        <span *ngIf="!isLoading">Accedi</span>
+      </button>
+    </form>
+
+    <div class="demo-info">
+      <h3>👤 Utenti di prova:</h3>
+      <div class="demo-user">
+        <strong>Mario Rossi:</strong> RSSMRA80A01H501Z
+      </div>
+      <div class="demo-user">
+        <strong>Giulia Bianchi:</strong> BNCGLI85M15F205W
+      </div>
+      <p><em>Password: qualsiasi valore</em></p>
+    </div>
+  </div>
+</div> 

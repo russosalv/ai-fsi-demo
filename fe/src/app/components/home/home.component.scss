@@ -1,0 +1,392 @@
+.home-container {
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+.header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 20px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  .header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .welcome-section {
+      h1 {
+        margin: 0;
+        font-size: 1.8rem;
+        font-weight: 700;
+      }
+
+      p {
+        margin: 4px 0 0 0;
+        opacity: 0.9;
+        font-size: 1rem;
+      }
+    }
+
+    .logout-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-1px);
+      }
+    }
+  }
+}
+
+.main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 20px;
+
+  h2 {
+    color: #2d3748;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+}
+
+// IBAN Selector
+.iban-selector {
+  margin-bottom: 32px;
+
+  .iban-tabs {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+
+    .iban-tab {
+      background: white;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex: 1;
+      min-width: 280px;
+
+      &:hover {
+        border-color: #667eea;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      &.active {
+        border-color: #667eea;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+      }
+
+      .tab-content {
+        text-align: center;
+
+        .account-name {
+          font-size: 1.1rem;
+          font-weight: 600;
+          margin-bottom: 8px;
+        }
+
+        .account-type {
+          font-size: 0.9rem;
+          opacity: 0.8;
+          margin-bottom: 8px;
+        }
+
+        .iban-preview {
+          font-family: 'Courier New', monospace;
+          font-size: 0.85rem;
+          opacity: 0.7;
+        }
+      }
+    }
+  }
+}
+
+// Single Account Info
+.single-account-info {
+  margin-bottom: 32px;
+
+  .account-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+    .account-details {
+      h3 {
+        margin: 0 0 8px 0;
+        color: #2d3748;
+        font-size: 1.3rem;
+        font-weight: 600;
+      }
+
+      .account-type {
+        color: #718096;
+        margin: 0 0 12px 0;
+        font-size: 1rem;
+      }
+
+      .iban {
+        font-family: 'Courier New', monospace;
+        color: #4a5568;
+        margin: 0;
+        font-size: 0.9rem;
+        background: #f7fafc;
+        padding: 8px 12px;
+        border-radius: 6px;
+        display: inline-block;
+      }
+    }
+  }
+}
+
+// Balance Section
+.balance-section {
+  margin-bottom: 32px;
+
+  .balance-card {
+    background: white;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+
+    .loading {
+      text-align: center;
+      padding: 40px;
+
+      .spinner {
+        font-size: 2rem;
+        animation: spin 1s linear infinite;
+        margin-bottom: 16px;
+      }
+
+      p {
+        color: #718096;
+        margin: 0;
+      }
+    }
+
+    .error {
+      text-align: center;
+      padding: 40px;
+
+      p {
+        color: #e53e3e;
+        margin-bottom: 16px;
+        font-weight: 500;
+      }
+
+      .retry-btn {
+        background: #e53e3e;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background: #c53030;
+        }
+      }
+    }
+
+    .balance-content {
+      .balance-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+
+        h3 {
+          margin: 0;
+          color: #2d3748;
+          font-size: 1.3rem;
+          font-weight: 600;
+        }
+
+        .account-type-badge {
+          background: #667eea;
+          color: white;
+          padding: 4px 12px;
+          border-radius: 20px;
+          font-size: 0.8rem;
+          font-weight: 500;
+        }
+      }
+
+      .balance-amount {
+        text-align: center;
+        margin: 32px 0;
+
+        .currency {
+          font-size: 2rem;
+          color: #667eea;
+          font-weight: 300;
+          vertical-align: top;
+          margin-right: 8px;
+        }
+
+        .amount {
+          font-size: 3.5rem;
+          font-weight: 700;
+          color: #2d3748;
+        }
+      }
+
+      .balance-details {
+        .detail-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 12px 0;
+          border-bottom: 1px solid #f1f5f9;
+
+          &:last-child {
+            border-bottom: none;
+          }
+
+          .label {
+            color: #718096;
+            font-weight: 500;
+          }
+
+          .value {
+            font-weight: 600;
+            color: #2d3748;
+
+            &.active {
+              color: #38a169;
+            }
+
+            &.inactive {
+              color: #e53e3e;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Summary Section
+.summary-section {
+  .accounts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+
+    .account-summary-card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+      }
+
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+
+        h4 {
+          margin: 0;
+          color: #2d3748;
+          font-size: 1.1rem;
+          font-weight: 600;
+        }
+
+        .type-badge {
+          background: #f1f5f9;
+          color: #4a5568;
+          padding: 4px 8px;
+          border-radius: 6px;
+          font-size: 0.75rem;
+          font-weight: 500;
+        }
+      }
+
+      .card-content {
+        .balance {
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: #667eea;
+          margin-bottom: 8px;
+        }
+
+        .iban-short {
+          font-family: 'Courier New', monospace;
+          color: #718096;
+          font-size: 0.85rem;
+          margin-bottom: 4px;
+        }
+
+        .last-update {
+          color: #a0aec0;
+          font-size: 0.8rem;
+        }
+      }
+    }
+  }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .header .header-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
+  }
+
+  .main-content {
+    padding: 20px 16px;
+  }
+
+  .iban-tabs {
+    flex-direction: column;
+
+    .iban-tab {
+      min-width: auto;
+    }
+  }
+
+  .balance-content .balance-amount {
+    .currency {
+      font-size: 1.5rem;
+    }
+
+    .amount {
+      font-size: 2.5rem;
+    }
+  }
+
+  .accounts-grid {
+    grid-template-columns: 1fr;
+  }
+} 

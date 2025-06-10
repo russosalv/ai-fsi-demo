@@ -1,0 +1,113 @@
+<div class="home-container">
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <div class="welcome-section">
+        <h1>🏦 Banking Portal</h1>
+        <p>Benvenuto, <strong>{{ currentUser?.customerName }}</strong></p>
+      </div>
+      <button class="logout-btn" (click)="logout()">
+        🚪 Esci
+      </button>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <!-- IBAN Selector (if multiple accounts) -->
+    <div class="iban-selector" *ngIf="bankAccounts.length > 1">
+      <h2>Seleziona il tuo conto</h2>
+      <div class="iban-tabs">
+        <button
+          *ngFor="let account of bankAccounts"
+          class="iban-tab"
+          [class.active]="selectedIban === account.iban"
+          (click)="onIbanSelect(account.iban)"
+        >
+          <div class="tab-content">
+            <div class="account-name">{{ account.accountName }}</div>
+            <div class="account-type">{{ getAccountTypeLabel(account.accountType) }}</div>
+            <div class="iban-preview">{{ account.iban.substring(0, 8) }}...{{ account.iban.substring(account.iban.length - 4) }}</div>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Single Account Info (if only one account) -->
+    <div class="single-account-info" *ngIf="bankAccounts.length === 1">
+      <h2>Il tuo conto</h2>
+      <div class="account-card">
+        <div class="account-details">
+          <h3>{{ bankAccounts[0].accountName }}</h3>
+          <p class="account-type">{{ getAccountTypeLabel(bankAccounts[0].accountType) }}</p>
+          <p class="iban">IBAN: {{ bankAccounts[0].iban }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Balance Display -->
+    <div class="balance-section">
+      <h2>Saldo del conto selezionato</h2>
+      
+      <div class="balance-card">
+        <div *ngIf="isLoading" class="loading">
+          <div class="spinner">⏳</div>
+          <p>Caricamento saldo...</p>
+        </div>
+
+        <div *ngIf="errorMessage && !isLoading" class="error">
+          <p>❌ {{ errorMessage }}</p>
+          <button class="retry-btn" (click)="loadBalance(selectedIban)">
+            Riprova
+          </button>
+        </div>
+
+        <div *ngIf="currentBalance && !isLoading && !errorMessage" class="balance-content">
+          <div class="balance-header">
+            <h3>{{ currentBalance.accountName }}</h3>
+            <span class="account-type-badge">{{ getAccountTypeLabel(currentBalance.accountType) }}</span>
+          </div>
+          
+          <div class="balance-amount">
+            <span class="currency">€</span>
+            <span class="amount">{{ formatCurrency(currentBalance.balance).replace('€', '').trim() }}</span>
+          </div>
+          
+          <div class="balance-details">
+            <div class="detail-item">
+              <span class="label">IBAN:</span>
+              <span class="value">{{ currentBalance.iban }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="label">Ultimo aggiornamento:</span>
+              <span class="value">{{ formatDate(currentBalance.lastUpdated) }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="label">Stato:</span>
+              <span class="value" [class.active]="currentBalance.isActive" [class.inactive]="!currentBalance.isActive">
+                {{ currentBalance.isActive ? 'Attivo' : 'Non attivo' }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Account Summary -->
+    <div class="summary-section" *ngIf="bankAccounts.length > 0">
+      <h2>Riepilogo conti</h2>
+      <div class="accounts-grid">
+        <div *ngFor="let account of bankAccounts" class="account-summary-card">
+          <div class="card-header">
+            <h4>{{ account.accountName }}</h4>
+            <span class="type-badge">{{ getAccountTypeLabel(account.accountType) }}</span>
+          </div>
+          <div class="card-content">
+            <div class="balance">{{ formatCurrency(account.balance) }}</div>
+            <div class="iban-short">{{ account.iban.substring(0, 8) }}...{{ account.iban.substring(account.iban.length - 4) }}</div>
+            <div class="last-update">Agg. {{ formatDate(account.lastUpdated) }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div> 
