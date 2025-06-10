@@ -7,6 +7,14 @@ Facciamo creare un nuovo progetto c# chiamato Bamking.Infrastructure che contien
 
 Obbiettivo: Dimostrare la fattibilità di poter generare codice a partire da un documento tecnico
 
+```txt
+dato il documento tecnico della banca alfa crea in /be un ulteriroe progetto chiamato Banking.Infrastructure che implementi la comunicazione verso l'api descritta in documentazione.
+Prima di effettuare le modifiche di codice assicurati di aver compreso il documento,
+Rileggi tutto il documento, crea una strategia di implementazione e codiviti la strategia.
+Il to compito e mapapre tutti i dati richiesti e le possibili eccezioni
+crea interfacce e implementazioni concrete
+```
+
 # 2. Sviluppo Feature BackEnd + FrontEnd per P2P
 Generazione di pagina frontend e controlle BE per poter eseguire il pagamento P2P
 
@@ -22,3 +30,4 @@ Obbiettivo: Dimostrare che copilot può eseguire modifiche Frontend
 Possibilità di mockkare il servizion ICB per poter eseguire un test completo dell applicativo
 
 # 5. Esecuzione test E2E con Puppeteer 
+Esecuzione di un test e2e per esecuzione test con puppeteer

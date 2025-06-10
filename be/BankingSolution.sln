@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banking.Logic", "Banking.Lo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banking.API", "Banking.API\Banking.API.csproj", "{FA7713BC-EE00-464C-BD38-6F772B06A6AD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banking.Infrastructure", "Banking.Infrastructure\Banking.Infrastructure.csproj", "{C4C0CB15-CDA8-4403-BBF7-E458BBDCD64E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,18 @@ Global
 		{FA7713BC-EE00-464C-BD38-6F772B06A6AD}.Release|x64.Build.0 = Release|Any CPU
 		{FA7713BC-EE00-464C-BD38-6F772B06A6AD}.Release|x86.ActiveCfg = Release|Any CPU
 		{FA7713BC-EE00-464C-BD38-6F772B06A6AD}.Release|x86.Build.0 = Release|Any CPU
+		{C4C0CB15-CDA8-4403-BBF7-E458BBDCD64E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4C0CB15-CDA8-4403-BBF7-E458BBDCD64E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4C0CB15-CDA8-4403-BBF7-E458BBDCD64E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C4C0CB15-CDA8-4403-BBF7-E458BBDCD64E}.Debug|x64.Build.0 = Debug|Any CPU
+		{C4C0CB15-CDA8-4403-BBF7-E458BBDCD64E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C4C0CB15-CDA8-4403-BBF7-E458BBDCD64E}.Debug|x86.Build.0 = Debug|Any CPU
+		{C4C0CB15-CDA8-4403-BBF7-E458BBDCD64E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4C0CB15-CDA8-4403-BBF7-E458BBDCD64E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4C0CB15-CDA8-4403-BBF7-E458BBDCD64E}.Release|x64.ActiveCfg = Release|Any CPU
+		{C4C0CB15-CDA8-4403-BBF7-E458BBDCD64E}.Release|x64.Build.0 = Release|Any CPU
+		{C4C0CB15-CDA8-4403-BBF7-E458BBDCD64E}.Release|x86.ActiveCfg = Release|Any CPU
+		{C4C0CB15-CDA8-4403-BBF7-E458BBDCD64E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

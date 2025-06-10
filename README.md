@@ -221,3 +221,6 @@ curl -X GET "https://localhost:7086/api/bankaccounts/balances?ibans=IT60X0542811
 
 ## 0.AppAndBeReady
 Applicazione pronta con dati minimi e solo saldo implementato
+
+## 1.ICBIntegrtion
+Aggiunta Banking.Infrastructure per integrazione fake ICB
