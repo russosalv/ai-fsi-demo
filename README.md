@@ -216,3 +216,8 @@ curl -X GET "https://localhost:7086/api/bankaccounts/balances?ibans=IT60X0542811
 **Frontend**: Angular 18, TypeScript, RxJS, SCSS  
 **Database**: InMemory (Entity Framework)  
 **Architettura**: Clean Architecture, Dependency Injection, RESTful APIs 
+
+# TAG versionamento
+
+## 0.AppAndBeReady
+Applicazione pronta con dati minimi e solo saldo implementato
