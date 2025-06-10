@@ -13,8 +13,13 @@ export const routes: Routes = [
     canActivate: [AuthGuard]
   },
   { 
+    path: 'p2p-transfer', 
+    loadComponent: () => import('./components/p2p-transfer/p2p-transfer.component').then(c => c.P2PTransferComponent),
+    canActivate: [AuthGuard]
+  },
+  { 
     path: 'dashboard', 
     loadComponent: () => import('./app.component').then(c => c.AppComponent) 
   },
   { path: '**', redirectTo: '/login' }
-]; 
+];

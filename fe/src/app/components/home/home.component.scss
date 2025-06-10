@@ -288,70 +288,97 @@
 
 // Services Section
 .services-section {
+  h2 {
+    color: #1a202c;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
   .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
 
     .service-card {
       background: white;
-      border: 2px solid #e2e8f0;
+      border: 1px solid #e2e8f0;
       border-radius: 12px;
       padding: 24px;
-      cursor: pointer;
-      transition: all 0.3s ease;
       display: flex;
       align-items: center;
       gap: 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
       text-align: left;
+      position: relative;
+      overflow: hidden;
 
       &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
         border-color: #667eea;
-        transform: translateY(-3px);
-        box-shadow: 0 12px 28px rgba(102, 126, 234, 0.2);
       }
 
-      &:active {
-        transform: translateY(-1px);
+      &.p2p-highlight {
+        border: 2px solid #667eea;
+        background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+        
+        &:hover {
+          background: linear-gradient(135deg, #e6fffa 0%, #e6f3ff 100%);
+        }
       }
 
       .service-icon {
         font-size: 2.5rem;
-        line-height: 1;
-        min-width: 60px;
-        text-align: center;
+        flex-shrink: 0;
       }
 
       .service-content {
         flex: 1;
+        position: relative;
 
         h3 {
           margin: 0 0 8px 0;
-          color: #2d3748;
-          font-size: 1.2rem;
+          color: #1a202c;
+          font-size: 1.1rem;
           font-weight: 600;
         }
 
         p {
           margin: 0;
-          color: #718096;
+          color: #4a5568;
           font-size: 0.9rem;
           line-height: 1.4;
+        }
+
+        .new-badge {
+          position: absolute;
+          top: -8px;
+          right: 0;
+          background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+          color: white;
+          padding: 2px 8px;
+          border-radius: 12px;
+          font-size: 0.7rem;
+          font-weight: 600;
+          letter-spacing: 0.5px;
+          animation: pulse 2s infinite;
         }
       }
 
       .service-arrow {
         font-size: 1.5rem;
-        color: #667eea;
-        opacity: 0.7;
+        color: #cbd5e0;
+        opacity: 0.6;
         transition: all 0.2s ease;
-        min-width: 30px;
-        text-align: center;
+        flex-shrink: 0;
       }
 
       &:hover .service-arrow {
         opacity: 1;
         transform: translateX(4px);
+        color: #667eea;
       }
     }
   }
@@ -360,6 +387,15 @@
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
 }
 
 // Responsive design
@@ -395,4 +431,4 @@
   .services-grid {
     grid-template-columns: 1fr;
   }
-} 
+}

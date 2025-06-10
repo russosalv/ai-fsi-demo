@@ -1,0 +1,207 @@
+.toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 400px;
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  min-width: 320px;
+  max-width: 400px;
+  pointer-events: auto;
+  position: relative;
+  overflow: hidden;
+  animation: slideInRight 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  // Barra colorata a sinistra
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: currentColor;
+  }
+
+  &.toast-success {
+    background: linear-gradient(135deg, rgba(72, 187, 120, 0.95), rgba(56, 178, 172, 0.95));
+    color: white;
+    border-color: rgba(72, 187, 120, 0.3);
+  }
+
+  &.toast-error {
+    background: linear-gradient(135deg, rgba(245, 101, 101, 0.95), rgba(237, 100, 166, 0.95));
+    color: white;
+    border-color: rgba(245, 101, 101, 0.3);
+  }
+
+  &.toast-warning {
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.95), rgba(251, 146, 60, 0.95));
+    color: white;
+    border-color: rgba(251, 191, 36, 0.3);
+  }
+
+  &.toast-info {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.95), rgba(99, 102, 241, 0.95));
+    color: white;
+    border-color: rgba(59, 130, 246, 0.3);
+  }
+}
+
+.toast-icon {
+  flex-shrink: 0;
+  font-size: 20px;
+  margin-top: 2px;
+}
+
+.toast-content {
+  flex: 1;
+  min-width: 0;
+
+  .toast-title {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 4px;
+    line-height: 1.4;
+  }
+
+  .toast-message {
+    font-size: 13px;
+    line-height: 1.5;
+    opacity: 0.95;
+    word-wrap: break-word;
+    
+    // Stili per messaggi multi-linea
+    ::ng-deep br {
+      margin-bottom: 4px;
+    }
+  }
+}
+
+.toast-close {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: currentColor;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  opacity: 0.7;
+  transition: all 0.2s ease;
+  margin-top: -2px;
+  margin-right: -4px;
+
+  &:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+// Animazioni
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.toast.removing {
+  animation: slideOutRight 0.2s ease-in-out forwards;
+}
+
+// Progress bar per durata
+.toast {
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.3);
+    animation: progressBar var(--duration, 5s) linear forwards;
+  }
+}
+
+@keyframes progressBar {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .toast-container {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    max-width: none;
+  }
+
+  .toast {
+    min-width: auto;
+    max-width: none;
+  }
+}
+
+// Hover effect
+.toast {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  }
+}
+
+// Multiple toasts stacking
+.toast:not(:first-child) {
+  margin-top: -4px;
+  transform: scale(0.98);
+  opacity: 0.9;
+}
+
+.toast:not(:first-child):not(:nth-child(2)) {
+  transform: scale(0.96);
+  opacity: 0.8;
+}
+
+.toast:nth-child(n+4) {
+  display: none; // Nasconde toast oltre il terzo
+}

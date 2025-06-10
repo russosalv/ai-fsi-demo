@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { BankAccount } from '../models/bank-account.model';
 import { Balance } from '../models/balance.model';
 import { Customer } from '../models/customer.model';
+import { P2PTransferRequest, P2PTransferResponse, ValidationResult, HealthCheckResponse } from '../models/p2p.model';
 import { appConfig } from '../config/app.config';
 
 @Injectable({
@@ -41,4 +42,21 @@ export class BankingApiService {
   getCustomerById(id: number): Observable<Customer> {
     return this.http.get<Customer>(`${this.apiUrl}/customers/${id}`);
   }
-} 
+
+  // P2P Transfer Methods
+  
+  // Health check for P2P service
+  getP2PHealth(): Observable<HealthCheckResponse> {
+    return this.http.get<HealthCheckResponse>(`${this.apiUrl}/P2P/health`);
+  }
+
+  // Validate P2P transfer request
+  validateP2PTransfer(request: P2PTransferRequest): Observable<ValidationResult> {
+    return this.http.post<ValidationResult>(`${this.apiUrl}/P2P/validate`, request);
+  }
+
+  // Execute P2P transfer
+  executeP2PTransfer(request: P2PTransferRequest): Observable<P2PTransferResponse> {
+    return this.http.post<P2PTransferResponse>(`${this.apiUrl}/P2P/transfer`, request);
+  }
+}

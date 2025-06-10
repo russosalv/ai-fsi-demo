@@ -97,10 +97,17 @@ export class HomeComponent implements OnInit {
   getSelectedAccount(): BankAccount | undefined {
     return this.bankAccounts.find(account => account.iban === this.selectedIban);
   }
-
   navigateToService(service: string): void {
-    // Placeholder per futuro routing ai servizi
-    console.log(`Navigating to service: ${service}`);
-    alert(`Servizio "${service}" non ancora implementato`);
+    if (service === 'p2p-transfer') {
+      this.router.navigate(['/p2p-transfer']);
+    } else {
+      // Placeholder per futuro routing ai servizi
+      console.log(`Navigating to service: ${service}`);
+      alert(`Servizio "${service}" non ancora implementato`);
+    }
+  }
+
+  navigateToP2P(): void {
+    this.router.navigate(['/p2p-transfer']);
   }
 } 
