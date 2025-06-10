@@ -22,3 +22,7 @@ be/Banking.Models/obj/
 # Log dei script E2E
 backend.log
 frontend.log
+
+be/Banking.Infrastructure/bin/
+
+be/Banking.Infrastructure/obj/

@@ -128,16 +128,16 @@ public class BancaAlfaP2PMockService : IBancaAlfaP2PService
         // Logica per determinare lo scenario basata sui dati della richiesta
         // Puoi personalizzare questa logica in base alle tue esigenze
         
-        // Esempio: utilizza gli ultimi caratteri del tax ID per determinare lo scenario
+        // Esempio: utilizza l'ultimo carattere del tax ID per determinare lo scenario
         if (!string.IsNullOrEmpty(request.RecipientTaxId))
         {
-            var lastChar = request.RecipientTaxId.Last();
+            var lastChar = char.ToLowerInvariant(request.RecipientTaxId.Last());
             return lastChar switch
             {
-                '1' => "error_insufficient_funds",
-                '2' => "error_account_blocked",
-                '3' => "error_invalid_account",
-                '9' => "slow_response",
+                't' => "error_insufficient_funds",
+                'u' => "error_account_blocked",
+                'v' => "error_invalid_account",
+                'z' => "slow_response",
                 _ => _config.MockScenarios.DefaultScenario
             };
         }

@@ -67,12 +67,12 @@ Gli scenari mock sono configurati nella sezione `MockScenarios` dell'appsettings
 
 ## Selezione dello Scenario
 
-Lo scenario viene selezionato automaticamente in base all'ultimo carattere del `RecipientTaxId`:
+Lo scenario viene selezionato automaticamente in base all'ultimo carattere del `RecipientTaxId` (case-insensitive):
 
-- Carattere '1': `error_insufficient_funds`
-- Carattere '2': `error_account_blocked`
-- Carattere '3': `error_invalid_account`
-- Carattere '9': `slow_response`
+- Carattere 't' o 'T': `error_insufficient_funds`
+- Carattere 'u' o 'U': `error_account_blocked`
+- Carattere 'v' o 'V': `error_invalid_account`
+- Carattere 'z' o 'Z': `slow_response`
 - Altri caratteri: `DefaultScenario`
 
 ### Esempi di Test
@@ -89,7 +89,23 @@ var request = new P2PTransferRequest
 // Test di errore fondi insufficienti
 var request = new P2PTransferRequest 
 { 
-    RecipientTaxId = "ABCDEF12345678901", // ultimo carattere '1' -> error_insufficient_funds
+    RecipientTaxId = "ABCDEF123456789T", // ultimo carattere 'T' -> error_insufficient_funds
+    SenderTaxId = "SENDER123456789",
+    Amount = 100.00m
+};
+
+// Test di account bloccato
+var request = new P2PTransferRequest 
+{ 
+    RecipientTaxId = "ABCDEF123456789U", // ultimo carattere 'U' -> error_account_blocked
+    SenderTaxId = "SENDER123456789",
+    Amount = 100.00m
+};
+
+// Test di account non valido
+var request = new P2PTransferRequest 
+{ 
+    RecipientTaxId = "ABCDEF123456789V", // ultimo carattere 'V' -> error_invalid_account
     SenderTaxId = "SENDER123456789",
     Amount = 100.00m
 };
@@ -97,7 +113,7 @@ var request = new P2PTransferRequest
 // Test di risposta lenta
 var request = new P2PTransferRequest 
 { 
-    RecipientTaxId = "ABCDEF12345678909", // ultimo carattere '9' -> slow_response
+    RecipientTaxId = "ABCDEF123456789Z", // ultimo carattere 'Z' -> slow_response
     SenderTaxId = "SENDER123456789",
     Amount = 100.00m
 };
@@ -133,7 +149,7 @@ public async Task TestP2PTransfer_InsufficientFunds()
     // Arrange
     var request = new P2PTransferRequest 
     { 
-        RecipientTaxId = "TEST1234567891", // Triggera scenario error_insufficient_funds
+        RecipientTaxId = "TEST123456789T", // Triggera scenario error_insufficient_funds
         SenderTaxId = "SENDER123456789",
         Amount = 1000.00m
     };
