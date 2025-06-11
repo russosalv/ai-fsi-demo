@@ -75,14 +75,27 @@ Creazione delle immagini per BE e FE e publicazione in docker compose
 
 ```txt
 Il tuo compito è quello di creare due Docker image per /be e /fe
-i dockerimage devono essere generati da un imagine consona alla tecnologia usata dai progetti
-crea anche un docker copmose nella root del progetto per avviare il progetto compelt BE+FE
-il docker compose deve contenere un volume per il BE sulla path /app
+i dockerimage devono essere generati da un'immagine consona alla tecnologia usata dai progetti
+crea anche un docker compose nella root del progetto per avviare il progetto completo BE+FE
+il docker compose deve contenere un volume per il BE sulla path /persistence
 
 Note implementative:
 Prima di generare ispeziona il progetto
 - Comprendi le tecnologie usate sia per Be che per FE
 - comprendi le porte utilizzate
+- crea un certificato self signed per il backend e rendilo trustato nel frontend
+- modifica se necessari i puntamenti del Backend nel Frontend, senza però distruggere l'ambiente di dev in locale
+
+IMPORTANTE ARCHITETTURA:
+- Il frontend viene acceduto dal BROWSER DELL'HOST su localhost:4200
+- Le chiamate API dal browser devono raggiungere il backend tramite localhost:PORTA_BACKEND
+- NON usare nomi di container Docker nelle URL API del frontend
+- Il frontend deve chiamare localhost, non nomi di container interni
+
+CONFIGURAZIONE CRITICA:
+- Assicurati che l'API_URL del frontend punti a localhost per l'accesso dal browser
+- Testa che sia Swagger che le API siano accessibili in produzione
+- Verifica che gli healthcheck siano sintatticamente corretti
 ```
 
 # DEMO OPTION

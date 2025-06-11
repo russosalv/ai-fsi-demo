@@ -27,12 +27,15 @@ builder.Services.AddBancaAlfaInfrastructure(builder.Configuration);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Configure HTTPS
-builder.Services.AddHttpsRedirection(options =>
+// Configure HTTPS (solo in produzione)
+if (builder.Environment.IsProduction())
 {
-    options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
-    options.HttpsPort = 7086;
-});
+    builder.Services.AddHttpsRedirection(options =>
+    {
+        options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
+        options.HttpsPort = 443; // Porta interna del container
+    });
+}
 
 // Add CORS
 builder.Services.AddCors(options =>
@@ -55,14 +58,25 @@ using (var scope = app.Services.CreateScope())
 }
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+// Abilita Swagger anche in produzione per i container Docker
+if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Banking API V1");
+        c.RoutePrefix = "swagger";
+    });
 }
 
 app.UseCors("AllowFrontend");
-app.UseHttpsRedirection();
+
+// Use HTTPS redirection only in production and only if HTTPS is available
+if (app.Environment.IsProduction() && app.Configuration["ASPNETCORE_URLS"]?.Contains("https") == true)
+{
+    app.UseHttpsRedirection();
+}
+
 app.MapControllers();
 
 app.Run();
