@@ -70,11 +70,77 @@ L'applicazione genera automaticamente certificati self-signed per HTTPS:
 
 ### Installazione del Certificato (Opzionale)
 
-Per evitare avvisi SSL nel browser:
+Per evitare avvisi SSL nel browser, installa il certificato self-signed:
 
-1. Dopo il primo avvio, il certificato sarà disponibile in `./certs/banking-api.crt`
-2. Installa il certificato nel tuo browser o nel sistema operativo
-3. Riavvia il browser
+#### Metodo 1: Tramite Impostazioni di Chrome
+
+1. **Apri Chrome** e vai su `chrome://settings/certificates`
+
+2. **Accedi alla gestione certificati**:
+   - Clicca su "Gestisci certificati" nella sezione "Privacy e sicurezza"
+
+3. **Importa il certificato**:
+   - Nella finestra che si apre, vai alla scheda "Autorità di certificazione radice attendibili"
+   - Clicca su "Importa..."
+   - Naviga fino al file `./certs/banking-api.crt` nella tua cartella del progetto
+   - Seleziona il certificato e clicca "Apri"
+
+4. **Completa l'importazione**:
+   - Segui la procedura guidata
+   - Assicurati di selezionare "Considera attendibile questo certificato per l'identificazione di siti Web"
+   - Clicca "Fine"
+
+#### Metodo 2: Direttamente dal Browser
+
+1. **Visita l'URL HTTPS**: Vai su `https://localhost:7086`
+
+2. **Clicca sull'icona di avviso**:
+   - Nella barra degli indirizzi vedrai un'icona di "Non sicuro"
+   - Clicca su di essa
+
+3. **Visualizza certificato**:
+   - Clicca su "Certificato non valido"
+   - Nella finestra del certificato, clicca su "Dettagli"
+   - Clicca su "Copia su file..."
+
+4. **Installa nelle autorità attendibili**:
+   - Segui la procedura guidata
+   - Seleziona "Autorità di certificazione radice attendibili"
+   - Completa l'installazione
+
+#### Metodo 3: Tramite Windows (Consigliato)
+
+1. **Apri Gestione Certificati Windows**:
+   - Premi `Windows + R`
+   - Digita `certmgr.msc` e premi Invio
+
+2. **Importa il certificato**:
+   - Naviga a "Autorità di certificazione radice attendibili" → "Certificati"
+   - Clicca destro → "Tutte le attività" → "Importa..."
+   - Seleziona il file `./certs/banking-api.crt`
+   - Completa l'importazione
+
+3. **Riavvia Chrome** per applicare i cambiamenti
+
+#### Verifica dell'Installazione
+
+Dopo aver installato il certificato:
+
+1. **Riavvia Chrome completamente**
+2. **Visita** `https://localhost:7086`
+3. **Controlla** che non ci siano più avvisi SSL
+4. **L'icona del lucchetto** dovrebbe essere verde/sicura
+
+#### Note Importanti
+
+⚠️ **Attenzione**: Questo certificato è self-signed e valido solo per sviluppo/testing. Non usarlo mai in produzione.
+
+🔄 **Se non funziona**: 
+- Assicurati che il certificato sia stato generato correttamente eseguendo `docker-compose up --build`
+- Controlla che il file `./certs/banking-api.crt` esista
+- Prova a cancellare la cache di Chrome (`chrome://settings/clearBrowserData`)
+
+Il certificato sarà valido per `localhost` e `banking-api` (il nome del container Docker).
 
 ## Configurazione
 
