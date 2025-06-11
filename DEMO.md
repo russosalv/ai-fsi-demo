@@ -96,6 +96,20 @@ CONFIGURAZIONE CRITICA:
 - Assicurati che l'API_URL del frontend punti a localhost per l'accesso dal browser
 - Testa che sia Swagger che le API siano accessibili in produzione
 - Verifica che gli healthcheck siano sintatticamente corretti
+
+CONFIGURAZIONE HTTPS:
+- Il backend deve esporre HTTPS con certificati self-signed
+- Il frontend deve chiamare il backend tramite HTTPS (non HTTP)
+- Configura l'API_URL del frontend per usare https://localhost:PORTA_HTTPS/api
+- Fornisci istruzioni dettagliate per accettare i certificati self-signed nel browser
+- Includi istruzioni su come testare prima Swagger in HTTPS, poi l'app frontend
+
+DELIVERABLE FINALI:
+- Dockerfile per BE e FE funzionanti
+- docker-compose.yml con orchestrazione completa
+- Script di avvio (.ps1 e .sh)
+- Documentazione completa con istruzioni per certificati HTTPS
+- Istruzioni step-by-step per il primo avvio e accettazione certificati
 ```
 
 # DEMO OPTION
