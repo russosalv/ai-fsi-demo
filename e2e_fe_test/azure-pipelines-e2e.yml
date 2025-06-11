@@ -1,0 +1,150 @@
+# Azure DevOps Pipeline per Test E2E Banking Portal
+# Questo pipeline esegue il test automatico dell'interfaccia frontend
+
+trigger:
+  branches:
+    include:
+    - main
+    - develop
+  paths:
+    include:
+    - fe/*
+    - e2e_fe_test/*
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  nodeVersion: '18.x'
+  frontendPort: '4200'
+  backendPort: '5000'
+
+stages:
+- stage: E2ETest
+  displayName: 'Test E2E Frontend'
+  jobs:
+  - job: RunE2ETests
+    displayName: 'Esecuzione Test E2E'
+    timeoutInMinutes: 15
+    
+    steps:
+    # Checkout del codice
+    - checkout: self
+      displayName: 'Checkout Repository'
+    
+    # Setup Node.js
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '$(nodeVersion)'
+      displayName: 'Setup Node.js $(nodeVersion)'
+    
+    # Installazione dipendenze backend
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'restore'
+        projects: 'be/**/*.csproj'
+      displayName: 'Restore Backend Dependencies'
+    
+    # Build backend
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'build'
+        projects: 'be/**/*.csproj'
+        arguments: '--configuration Release'
+      displayName: 'Build Backend'
+    
+    # Installazione dipendenze frontend
+    - script: |
+        cd fe
+        npm ci
+      displayName: 'Install Frontend Dependencies'
+    
+    # Build frontend
+    - script: |
+        cd fe
+        npm run build
+      displayName: 'Build Frontend'
+    
+    # Avvio backend in background
+    - script: |
+        cd be
+        nohup dotnet run --urls=http://localhost:$(backendPort) > backend.log 2>&1 &
+        echo $! > backend.pid
+        sleep 10
+        echo "Backend avviato su porta $(backendPort)"
+      displayName: 'Start Backend Server'
+    
+    # Avvio frontend in background
+    - script: |
+        cd fe
+        nohup npm start -- --port $(frontendPort) > frontend.log 2>&1 &
+        echo $! > frontend.pid
+        sleep 15
+        echo "Frontend avviato su porta $(frontendPort)"
+      displayName: 'Start Frontend Server'
+    
+    # Verifica che i servizi siano attivi
+    - script: |
+        # Attesa che i servizi siano pronti
+        timeout 60 bash -c 'until curl -f http://localhost:$(frontendPort); do sleep 2; done'
+        timeout 60 bash -c 'until curl -f http://localhost:$(backendPort)/health || curl -f http://localhost:$(backendPort); do sleep 2; done'
+        echo "Servizi pronti per il test"
+      displayName: 'Wait for Services to be Ready'
+    
+    # Installazione dipendenze test E2E
+    - script: |
+        cd e2e_fe_test
+        npm install
+      displayName: 'Install E2E Test Dependencies'
+    
+    # Esecuzione test E2E
+    - script: |
+        cd e2e_fe_test
+        npm run test:headless
+      displayName: 'Run E2E Tests'
+      env:
+        NODE_ENV: 'test'
+        CI: 'true'
+    
+    # Cleanup: termina i processi
+    - script: |
+        # Termina frontend
+        if [ -f fe/frontend.pid ]; then
+          kill $(cat fe/frontend.pid) || true
+        fi
+        
+        # Termina backend
+        if [ -f be/backend.pid ]; then
+          kill $(cat be/backend.pid) || true
+        fi
+        
+        # Cleanup eventuali processi rimasti
+        pkill -f "dotnet run" || true
+        pkill -f "npm start" || true
+        
+        echo "Cleanup completato"
+      displayName: 'Cleanup Services'
+      condition: always()
+    
+    # Pubblicazione dei log in caso di errore
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathToPublish: 'e2e_fe_test/'
+        artifactName: 'e2e-logs-and-screenshots'
+      displayName: 'Publish E2E Artifacts'
+      condition: failed()
+    
+    # Pubblicazione dei log dei servizi
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathToPublish: 'be/backend.log'
+        artifactName: 'backend-logs'
+      displayName: 'Publish Backend Logs'
+      condition: failed()
+    
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathToPublish: 'fe/frontend.log'
+        artifactName: 'frontend-logs'
+      displayName: 'Publish Frontend Logs'
+      condition: failed() 

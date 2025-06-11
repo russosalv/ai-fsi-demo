@@ -1,0 +1,22 @@
+{
+  "name": "e2e-fe-test",
+  "version": "1.0.0",
+  "description": "Test E2E per l'applicativo Banking Portal",
+  "main": "banking-portal-e2e.js",
+  "scripts": {
+    "test": "node banking-portal-e2e.js",
+    "test:headless": "node banking-portal-e2e.js --headless",
+    "install-deps": "npm install"
+  },
+  "dependencies": {
+    "puppeteer": "^21.6.1"
+  },
+  "keywords": [
+    "e2e",
+    "puppeteer",
+    "banking",
+    "testing"
+  ],
+  "author": "AI FSI Demo Team",
+  "license": "MIT"
+} 
