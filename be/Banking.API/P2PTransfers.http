@@ -1,0 +1,57 @@
+### Test P2P Transfer API
+
+# Test trasferimento P2P di successo
+POST https://localhost:7086/api/P2PTransfers
+Content-Type: application/json
+
+{
+    "senderTaxId": "RSSMRA85M01H501Z",
+    "recipientTaxId": "VRDRBT90A41F205X",
+    "amount": 150.50,
+    "description": "Rimborso cena",
+    "referenceId": "TEST_20250620_001"
+}
+
+###
+
+# Test con importo troppo alto
+POST https://localhost:7086/api/P2PTransfers
+Content-Type: application/json
+
+{
+    "senderTaxId": "RSSMRA85M01H501Z",
+    "recipientTaxId": "VRDRBT90A41F205X",
+    "amount": 6000.00,
+    "description": "Test limite massimo"
+}
+
+###
+
+# Test con codice fiscale non valido
+POST https://localhost:7086/api/P2PTransfers
+Content-Type: application/json
+
+{
+    "senderTaxId": "INVALID_TAX_ID",
+    "recipientTaxId": "VRDRBT90A41F205X",
+    "amount": 100.00,
+    "description": "Test validazione"
+}
+
+###
+
+# Test stesso account (dovrebbe fallire)
+POST https://localhost:7086/api/P2PTransfers
+Content-Type: application/json
+
+{
+    "senderTaxId": "RSSMRA85M01H501Z",
+    "recipientTaxId": "RSSMRA85M01H501Z",
+    "amount": 100.00,
+    "description": "Test stesso account"
+}
+
+###
+
+# Ottieni limiti operativi
+GET https://localhost:7086/api/P2PTransfers/limits

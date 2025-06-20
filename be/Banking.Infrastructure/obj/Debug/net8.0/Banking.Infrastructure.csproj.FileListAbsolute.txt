@@ -1,0 +1,16 @@
+d:\Dev\ai-fsi-demo\be\Banking.Infrastructure\obj\Debug\net8.0\Banking.Infrastructure.csproj.AssemblyReference.cache
+d:\Dev\ai-fsi-demo\be\Banking.Infrastructure\obj\Debug\net8.0\Banking.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+d:\Dev\ai-fsi-demo\be\Banking.Infrastructure\obj\Debug\net8.0\Banking.Infrastructure.AssemblyInfoInputs.cache
+d:\Dev\ai-fsi-demo\be\Banking.Infrastructure\obj\Debug\net8.0\Banking.Infrastructure.AssemblyInfo.cs
+d:\Dev\ai-fsi-demo\be\Banking.Infrastructure\obj\Debug\net8.0\Banking.Infrastructure.csproj.CoreCompileInputs.cache
+d:\Dev\ai-fsi-demo\be\Banking.Infrastructure\obj\Debug\net8.0\Banking.Infrastructure.sourcelink.json
+d:\Dev\ai-fsi-demo\be\Banking.Infrastructure\bin\Debug\net8.0\Banking.Infrastructure.deps.json
+d:\Dev\ai-fsi-demo\be\Banking.Infrastructure\bin\Debug\net8.0\Banking.Infrastructure.dll
+d:\Dev\ai-fsi-demo\be\Banking.Infrastructure\bin\Debug\net8.0\Banking.Infrastructure.pdb
+d:\Dev\ai-fsi-demo\be\Banking.Infrastructure\bin\Debug\net8.0\Banking.Models.dll
+d:\Dev\ai-fsi-demo\be\Banking.Infrastructure\bin\Debug\net8.0\Banking.Models.pdb
+d:\Dev\ai-fsi-demo\be\Banking.Infrastructure\obj\Debug\net8.0\Banking..269F7D3E.Up2Date
+d:\Dev\ai-fsi-demo\be\Banking.Infrastructure\obj\Debug\net8.0\Banking.Infrastructure.dll
+d:\Dev\ai-fsi-demo\be\Banking.Infrastructure\obj\Debug\net8.0\refint\Banking.Infrastructure.dll
+d:\Dev\ai-fsi-demo\be\Banking.Infrastructure\obj\Debug\net8.0\Banking.Infrastructure.pdb
+d:\Dev\ai-fsi-demo\be\Banking.Infrastructure\obj\Debug\net8.0\ref\Banking.Infrastructure.dll
