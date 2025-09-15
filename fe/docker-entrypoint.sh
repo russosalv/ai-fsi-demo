@@ -38,4 +38,4 @@ EOF
 fi
 
 # Esegui il comando originale
-exec "$@" 
+exec "$@"

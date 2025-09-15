@@ -1,4 +1,4 @@
-Developer: Developer: Analizza il file SRT della call tra Business Manager e Business Analyst e crea una Business Specification completa seguendo questa struttura precisa.
+Analizza il file SRT della call tra Business Manager e Business Analyst e crea una Business Specification completa seguendo questa struttura precisa.
 
 **INPUT RICHIESTO:**
 - File SRT contenente trascrizione della call sui requisiti P2P

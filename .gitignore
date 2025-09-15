@@ -26,3 +26,5 @@ frontend.log
 be/Banking.Infrastructure/bin/
 
 be/Banking.Infrastructure/obj/
+
+fe/dist/
