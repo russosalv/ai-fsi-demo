@@ -11,8 +11,10 @@ ai-fsi-demo/
 │   ├── Banking.Logic/            # Business logic services
 │   ├── Banking.Infrastructure/   # External API integrations (Banca Alfa)
 │   └── Banking.API/             # Web API controllers
-├── fe/                          # Angular 18 Frontend
-└── e2e_fe_test/                # Puppeteer E2E tests
+├── fe/                          # Angular 19 Frontend
+├── e2e_fe_test/                # Puppeteer E2E tests
+├── mcp/                        # MCP server configurations (SQL Server)
+└── guidelines/                 # Comprehensive coding standards
 ```
 
 ## Critical Development Patterns
@@ -80,10 +82,22 @@ The `Banking.Infrastructure` project handles external Banca Alfa P2P API integra
 
 ### Docker Environment
 Uses orchestrated containers with volume persistence and HTTPS certificates:
-```bash
+```powershell
 .\start-docker.ps1 -Build    # Full stack with containers
 .\start-docker.ps1 -Down     # Stop all services
 ```
+
+**Container Architecture**:
+- `banking-api`: Backend with HTTPS (port 7086) + HTTP (port 5000)
+- `banking-frontend`: Angular app (port 4200)  
+- `sqlserver`: SQL Server 2022 Express (port 1433) 
+- `mssql-mcp-server`: Multi-database MCP server for AI database interactions
+
+### Database & MCP Integration
+- **InMemory Database**: Primary development database with seeded demo data
+- **SQL Server**: Additional containerized instance for advanced database operations
+- **MCP Server**: Model Context Protocol server for AI-driven database interactions
+- **Credentials**: SA user with password `TestPassword123!` for testing
 
 ### Testing Strategy
 - **E2E Tests**: Puppeteer tests in `/e2e_fe_test/` directory
@@ -120,7 +134,7 @@ public static IServiceCollection AddBancaAlfaInfrastructure(
     bool enableMocking = false)
 ```
 
-## Frontend (Angular 18)
+## Frontend (Angular 19)
 
 ### API Configuration
 Frontend uses configurable API URL in `fe/src/app/config/app.config.ts`:
