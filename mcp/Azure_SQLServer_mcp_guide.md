@@ -12,13 +12,10 @@
 ## 2. Scarica ed installa MCP Server
 
 ```bash
-git clone https://github.com/Azure-Samples/azure-sql-mcpserver-node
-cd azure-sql-mcpserver-node
+git clone https://github.com/Azure-Samples/SQL-AI-samples.git
+cd SQL-AI-samples/MssqlMcp/Node
 npm install
-npm run build
 ```
-
-Dopo la `build` troverai il file `index.js` nella cartella `dist`.
 
 ## 3. Configura mcp.json
 

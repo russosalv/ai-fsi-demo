@@ -66,8 +66,72 @@ services:
     networks:
       - banking-network
 
+  # SQL Server 2022 per test - servizio indipendente
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver-test
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=TestPassword123!
+      - MSSQL_PID=Express
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+    networks:
+      - banking-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "/opt/mssql-tools18/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "TestPassword123!", "-C", "-Q", "SELECT 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 90s
+
+  # MSSQL MCP Server in Server Mode (multi-database)
+  # Configurazione Claude Desktop MCP:
+  # {
+  #   "servers": {
+  #     "mssql": {
+  #       "command": "docker",
+  #       "args": [
+  #         "run",
+  #         "--rm",
+  #         "-i",
+  #         "-e", "MSSQL_CONNECTIONSTRING=Server=host.docker.internal,1433;User Id=sa;Password=TestPassword123!;TrustServerCertificate=True;",
+  #         "-e", "DatabaseConfiguration__EnableExecuteQuery=true",
+  #         "-e", "DatabaseConfiguration__EnableExecuteStoredProcedure=true",
+  #         "-e", "DatabaseConfiguration__EnableStartQuery=true",
+  #         "-e", "DatabaseConfiguration__EnableStartStoredProcedure=true",
+  #         "aadversteeg/mssqlclient-mcp-server:latest"
+  #       ]
+  #     }
+  #   }
+  # }
+  mssql-mcp-server:
+    image: aadversteeg/mssqlclient-mcp-server:latest
+    container_name: mssql-mcp-server
+    environment:
+      # Server Mode - no database specified for multi-database operations
+      - MSSQL_CONNECTIONSTRING=Server=sqlserver-test;User Id=sa;Password=TestPassword123!;TrustServerCertificate=True;
+      - DatabaseConfiguration__EnableExecuteQuery=true
+      - DatabaseConfiguration__EnableExecuteStoredProcedure=true
+      - DatabaseConfiguration__EnableStartQuery=true
+      - DatabaseConfiguration__EnableStartStoredProcedure=true
+      - DatabaseConfiguration__DefaultCommandTimeoutSeconds=60
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    networks:
+      - banking-network
+    restart: unless-stopped
+    stdin_open: true  # Necessario per MCP communication
+    tty: true         # Necessario per MCP communication
+
 volumes:
   app-data:
+    driver: local
+  sqlserver-data:
     driver: local
 
 networks:
