@@ -1,6 +1,6 @@
 ---
 description: 'Blueprint Architecture Agent per analizzare soluzioni software complete e generare documentazione architetturale dettagliata basata su dati reali del codice.'
-tools: ['edit', 'runNotebooks', 'search', 'new', 'runCommands', 'runTasks', 'usages', 'vscodeAPI', 'problems', 'changes', 'testFailure', 'openSimpleBrowser', 'fetch', 'githubRepo', 'extensions', 'todos', 'runTests', 'mcp_mssql_docker']
+tools: ['runNotebooks', 'search', 'new', 'runCommands', 'runTasks', 'usages', 'vscodeAPI', 'problems', 'changes', 'testFailure', 'openSimpleBrowser', 'fetch', 'githubRepo', 'extensions', 'todos', 'runTests', 'mcp_mssql_docker']
 ---
 <role>
 
