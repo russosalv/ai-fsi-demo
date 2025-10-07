@@ -1,0 +1,23 @@
+{
+    "servers": {
+        "mcp_mssql_docker": {
+            "command": "docker",
+            "args": [
+                "run",
+                "--rm",
+                "-i",
+                "-e",
+                "MSSQL_CONNECTIONSTRING=Server=host.docker.internal,1433;User Id=sa;Password=TestPassword123!;TrustServerCertificate=True;",
+                "-e",
+                "DatabaseConfiguration__EnableExecuteQuery=true",
+                "-e",
+                "DatabaseConfiguration__EnableExecuteStoredProcedure=true",
+                "-e",
+                "DatabaseConfiguration__EnableStartQuery=true",
+                "-e",
+                "DatabaseConfiguration__EnableStartStoredProcedure=true",
+                "aadversteeg/mssqlclient-mcp-server:latest"
+            ]
+        }
+    }
+}
