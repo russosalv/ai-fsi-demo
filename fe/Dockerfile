@@ -27,9 +27,10 @@ COPY nginx.conf /etc/nginx/nginx.conf
 # Copia i file buildati dall'applicazione Angular
 COPY --from=build /app/dist/banking-poc /usr/share/nginx/html
 
-# Copia script per configurazione dinamica
+# Copia script per configurazione dinamica e converti line endings
 COPY docker-entrypoint.sh /docker-entrypoint.sh
-RUN chmod +x /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh && \
+    sed -i 's/\r$//' /docker-entrypoint.sh
 
 # Esponi la porta 80
 EXPOSE 80
