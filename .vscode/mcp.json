@@ -19,11 +19,10 @@
                 "aadversteeg/mssqlclient-mcp-server:latest"
             ]
         },
-        "puppeteer": {
+        "playwright": {
             "command": "npx",
             "args": [
-                "-y",
-                "@modelcontextprotocol/server-puppeteer"
+                "@playwright/mcp@latest"
             ]
         }
     }
