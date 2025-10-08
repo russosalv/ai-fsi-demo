@@ -18,6 +18,13 @@
                 "DatabaseConfiguration__EnableStartStoredProcedure=true",
                 "aadversteeg/mssqlclient-mcp-server:latest"
             ]
+        },
+        "puppeteer": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-puppeteer"
+            ]
         }
     }
 }
